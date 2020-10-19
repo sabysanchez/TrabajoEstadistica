@@ -1,0 +1,97 @@
+---
+title: "Trabajo Estad saby"
+output: html_document
+---
+
+1. Instalamos las librerias
+```{r}
+library(htmltab)
+library(stringr)
+library(readr)
+library(car)
+library(tidyr)
+library(factoextra)
+library(cluster)
+library(rio)
+library(magrittr)
+library(plyr)
+install.packages("ggrepel")
+library(ggplot2)
+library(ggrepel)
+install.packages("fpc")
+library(dbscan)
+library(fpc)
+
+```
+
+2. importamos la data
+
+```{r setup, include=FALSE}
+linkVero = "https://github.com/Mago456/Ciencia-Politica-1/raw/master/Datafinalgrupo3.xlsx"
+dataVero = import (linkVero)
+```
+
+3. chequeamos la estructura de la data y vemos si todas las variables estan correctas.
+```{r}
+str(dataVero)
+```
+
+4. Una vez reconocida la variable de Seguros, nos aseguramos de convertir la variable como una numerica
+
+```{r}
+dataVero$`Porcet-Sitieneseguro`=as.numeric(dataVero$`Porcet-Sitieneseguro`)
+```
+
+5.  y  continuamos con el analisis descriptivo de la variable
+
+```{r}
+summary(dataVero$`Porcet-Sitieneseguro`)
+```
+
+6. Cotejamos que la media,mediana y moda sean las correctas con las siguientes funciones
+
+```{r}
+#media
+mean(dataVero$`Porcet-Sitieneseguro`, na.rm = T)
+media<-mean(dataVero$`Porcet-Sitieneseguro`,na.rm = T)
+media
+
+#mmediana
+median(dataVero$`Porcet-Sitieneseguro`,na.rm = T)
+
+#moda
+install.packages("DescTools") #Se coloca no
+library(DescTools)
+Mode(dataVero$`Porcet-Sitieneseguro`, na.rm = T)
+
+#desviacion estandar 
+sd(dataVero$`Porcet-Sitieneseguro`, na.rm = T)
+
+```
+
+7. Graficamos el analsis descriptivo de la variable con un boxplot
+
+```{r}
+
+   hist(dataVero$`Porcet-Sitieneseguro`)
+
+```
+
+8. Una vez realizado el analisis descriptivo de la variable , pasamos a realizar el analisis bivariado. 
+
+Y para ello primero analizamos la normalidad
+
+
+```{r}
+
+install.packages("nortest")
+library(nortest)
+
+hist(dataVero$`Porcet-Sitieneseguro`)
+```
+
+9. no tiene una distriución normal por lo que se debe usar un metodo no parametrico usamos sperman
+
+
+
+
